@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  coingecko-collector-worker:
+    environment:
+      - DOTNET_ENVIRONMENT=Development
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+  coingecko-prices-webapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5152:80"
