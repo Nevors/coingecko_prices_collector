@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Common.csproj" />
-    <ProjectReference Include="..\Coingecko.ExternalApi.Contracts\Coingecko.Api.Contracts.csproj" />
+    <ProjectReference Include="..\Coingecko.Api.Contracts\Coingecko.Api.Contracts.csproj" />
   </ItemGroup>
 
 </Project>
