@@ -6,8 +6,9 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Services/Collector/CoingeckoCollector/CoingeckoCollector.csproj", "Services/Collector/CoingeckoCollector/"]
-COPY ["Common/ExternalApi/Coingecko.ExternalApi/Coingecko.Api.csproj", "Common/ExternalApi/Coingecko.ExternalApi/"]
-COPY ["Common/ExternalApi/Coingecko.ExternalApi.Contracts/Coingecko.Api.Contracts.csproj", "Common/ExternalApi/Coingecko.ExternalApi.Contracts/"]
+COPY ["Common/Api/Coingecko.Api/Coingecko.Api.csproj", "Common/Api/Coingecko.Api/"]
+COPY ["Common/Common/Common.csproj", "Common/Common/"]
+COPY ["Common/Api/Coingecko.Api.Contracts/Coingecko.Api.Contracts.csproj", "Common/Api/Coingecko.Api.Contracts/"]
 RUN dotnet restore "Services/Collector/CoingeckoCollector/CoingeckoCollector.csproj"
 COPY . .
 WORKDIR "/src/Services/Collector/CoingeckoCollector"

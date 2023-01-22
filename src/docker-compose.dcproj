@@ -6,7 +6,7 @@
     <ProjectGuid>cb9746e3-c48a-4b55-bf5c-32d4f3d27139</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/{Scheme}://{ServiceHost}:{ServicePort}/swagger</DockerServiceUrl>
-    <DockerServiceName>oingeckoprices.webapi</DockerServiceName>
+    <DockerServiceName>coingeckoprices.webapi</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml" />

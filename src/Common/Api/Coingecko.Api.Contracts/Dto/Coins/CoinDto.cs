@@ -4,5 +4,5 @@ public record CoinDto
 {
     public string Symbol { get; init; } = string.Empty;
 
-    public double? CurrentPrice { get; init; }
+    public double CurrentPrice { get; init; }
 }

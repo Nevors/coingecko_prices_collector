@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using FluentValidation;
 using Coingecko.Api.Settings;
 using Coingecko.Api.Abstractions;
 using Polly;
@@ -11,19 +10,16 @@ using RestSharp;
 using Microsoft.Extensions.Logging;
 using Polly.Extensions.Http;
 using Coingecko.Api.ApiClient;
+using Microsoft.Extensions.Configuration;
+using Configuration.Extensions;
 
 namespace Coingecko.Api.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddCoingeckoApi(this IServiceCollection services, Action<CoingeckoApiSettings>? configure = null)
+    public static IServiceCollection AddCoingeckoApi(this IServiceCollection services, IConfiguration configuration)
     {
-        var settings = new CoingeckoApiSettings();
-        configure?.Invoke(settings);
-
-        new CoingeckoApiSettingsValidator().ValidateAndThrow(settings);
-
-        services.AddSingleton(settings);
+        var settings = services.ConfigureSettings<CoingeckoApiSettings, CoingeckoApiSettingsValidator>(configuration);
 
         services.AddSingleton<CircuitBreakerAsync>();
 

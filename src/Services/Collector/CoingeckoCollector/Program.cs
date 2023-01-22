@@ -1,21 +1,25 @@
 using Coingecko.Api.Abstractions.Queries;
 using Coingecko.Api.Extensions;
-using Coingecko.Api.Settings;
 using CoingeckoCollector.Abstractions;
 using CoingeckoCollector.NonPro;
 using CoingeckoCollector.Settings;
 using CoingeckoCollector.Worker;
-using RestSharp;
+using Configuration.Extensions;
+using Kafka.Extensions;
+using System.Reflection;
+using ÑoingeckoKafka.Contracts;
 
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, services) =>
     {
-        services.AddCoingeckoApi(
-            settings => context.Configuration.GetSection(nameof(CoingeckoApiSettings)).Bind(settings));
+        var settings = services.ConfigureSettings<CoingeckoCollectorSettings, CoingeckoCollectorSettingsValidator>(context.Configuration);
 
-        var section = context.Configuration.GetSection(nameof(CoingeckoCollectorSettings));
-        var settings = section.Get<CoingeckoCollectorSettings>();
-        services.Configure<CoingeckoCollectorSettings>(section);
+        services.AddKafka(context.Configuration)
+            .AddEvent<CurrencyCoinsUpdatedEvent>();
+
+        services.AddCoingeckoApi(context.Configuration);
+
+        services.AddAutoMapper(Assembly.GetEntryAssembly());
 
         services.AddTransient<ICollectorFlow, CollectorFlow>();
         services.Decorate<ICollectorFlow, CollectorFlowErrorDecorator>();
@@ -30,5 +34,3 @@ IHost host = Host.CreateDefaultBuilder(args)
     .Build();
 
 await host.RunAsync();
-
-record Success(string Protocol, string Host, string Content);

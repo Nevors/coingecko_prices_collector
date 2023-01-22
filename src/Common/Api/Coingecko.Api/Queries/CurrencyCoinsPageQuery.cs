@@ -33,7 +33,7 @@ internal class CurrencyCoinsPageQuery : ICurrencyCoinsPageQuery
         public string Symbol { get; init; } = string.Empty;
 
         [JsonPropertyName("current_price")]
-        public double? CurrentPrice { get; init; }
+        public double CurrentPrice { get; init; }
     }
 }
 
