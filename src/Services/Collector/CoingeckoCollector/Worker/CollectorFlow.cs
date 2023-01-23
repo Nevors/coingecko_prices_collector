@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using Coingecko.Api.Contracts;
 using Coingecko.Api.Contracts.Dto.Coins;
+using Coingecko.Events.Contracts;
 using CoingeckoCollector.Abstractions;
 using CoingeckoCollector.Settings;
 using Common.Extensions;
-using Kafka.Abstractions;
 using MessageBroker.Contracts;
+using MessageBroker.Contracts.Abstractions;
 using Microsoft.Extensions.Options;
 using System.Runtime.CompilerServices;
-using СoingeckoKafka.Contracts;
 
 namespace CoingeckoCollector.Worker
 {

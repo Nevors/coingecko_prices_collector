@@ -23,15 +23,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coingecko.Api", "Common\Api
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coingecko.Api.Contracts", "Common\Api\Coingecko.Api.Contracts\Coingecko.Api.Contracts.csproj", "{6F4458FC-1915-4E22-BBF3-0389C8ED61B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Configuration", "Common\Configuration\Configuration.csproj", "{DFCD3FC8-5222-446E-9F49-7DD58FEAB137}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Configuration", "Common\Configuration\Configuration.csproj", "{DFCD3FC8-5222-446E-9F49-7DD58FEAB137}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MessageBroker", "MessageBroker", "{6703E9C7-E46C-4DD4-9685-E73D1759EE7F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kafka", "Common\MessageBroker\Kafka\Kafka.csproj", "{8E220A1F-E947-4C6F-922F-273EFBB5D330}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageBroker.Contracts", "Common\MessageBroker\MessageBroker.Contracts\MessageBroker.Contracts.csproj", "{1600177E-90C7-4CB8-A51C-B9C0366EA5D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageBroker.Contracts", "Common\MessageBroker\MessageBroker.Contracts\MessageBroker.Contracts.csproj", "{1600177E-90C7-4CB8-A51C-B9C0366EA5D9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Сoingecko.Events.Contracts", "Common\MessageBroker\Сoingecko.Events.Contracts\Сoingecko.Events.Contracts.csproj", "{BE6B40EA-5120-4FCA-8869-E27763159DF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kafka.Subscriber", "Common\MessageBroker\Kafka.Subscriber\Kafka.Subscriber.csproj", "{9F7DB2F5-E2AC-4F77-9510-41B8343AFE9B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Coingecko.Events.Contracts", "Common\MessageBroker\Coingecko.Events.Contracts\Coingecko.Events.Contracts.csproj", "{342DC0C7-30D6-42DF-A36A-A91D849CEEE0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,10 +77,14 @@ Global
 		{1600177E-90C7-4CB8-A51C-B9C0366EA5D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1600177E-90C7-4CB8-A51C-B9C0366EA5D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1600177E-90C7-4CB8-A51C-B9C0366EA5D9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BE6B40EA-5120-4FCA-8869-E27763159DF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE6B40EA-5120-4FCA-8869-E27763159DF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE6B40EA-5120-4FCA-8869-E27763159DF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE6B40EA-5120-4FCA-8869-E27763159DF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F7DB2F5-E2AC-4F77-9510-41B8343AFE9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F7DB2F5-E2AC-4F77-9510-41B8343AFE9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F7DB2F5-E2AC-4F77-9510-41B8343AFE9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F7DB2F5-E2AC-4F77-9510-41B8343AFE9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{342DC0C7-30D6-42DF-A36A-A91D849CEEE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{342DC0C7-30D6-42DF-A36A-A91D849CEEE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{342DC0C7-30D6-42DF-A36A-A91D849CEEE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{342DC0C7-30D6-42DF-A36A-A91D849CEEE0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,7 +101,8 @@ Global
 		{6703E9C7-E46C-4DD4-9685-E73D1759EE7F} = {D3C7C6E1-1776-4AED-B262-3FA68E9FEC9F}
 		{8E220A1F-E947-4C6F-922F-273EFBB5D330} = {6703E9C7-E46C-4DD4-9685-E73D1759EE7F}
 		{1600177E-90C7-4CB8-A51C-B9C0366EA5D9} = {6703E9C7-E46C-4DD4-9685-E73D1759EE7F}
-		{BE6B40EA-5120-4FCA-8869-E27763159DF1} = {6703E9C7-E46C-4DD4-9685-E73D1759EE7F}
+		{9F7DB2F5-E2AC-4F77-9510-41B8343AFE9B} = {6703E9C7-E46C-4DD4-9685-E73D1759EE7F}
+		{342DC0C7-30D6-42DF-A36A-A91D849CEEE0} = {6703E9C7-E46C-4DD4-9685-E73D1759EE7F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9CA19980-AB8E-444B-81BE-615193425566}

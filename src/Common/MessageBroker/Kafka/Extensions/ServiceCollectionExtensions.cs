@@ -1,7 +1,7 @@
 ﻿using Configuration.Extensions;
 using Confluent.Kafka;
-using Kafka.Abstractions;
 using Kafka.Settings;
+using MessageBroker.Contracts.Abstractions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,12 +15,14 @@ public static class ServiceCollectionExtensions
 
         services.AddSingleton<IProducer<byte[], byte[]>>(sp =>
         {
-            var config = new ProducerConfig {
+            var config = new ProducerConfig
+            {
                 BootstrapServers = settings.BootstrapServers
             };
 
             return new ProducerBuilder<byte[], byte[]>(config).Build();
         });
+
 
         return new(services, settings);
     }
@@ -28,18 +30,18 @@ public static class ServiceCollectionExtensions
 
 public class KafkaConfigurator
 {
-    private readonly IServiceCollection services;
-    private readonly KafkaSettings settings;
+    public IServiceCollection Services { get; }
+    public KafkaSettings Settings { get; }
 
     public KafkaConfigurator(IServiceCollection services, KafkaSettings settings)
     {
-        this.services = services;
-        this.settings = settings;
+        Services = services;
+        Settings = settings;
     }
 
     public KafkaConfigurator AddEvent<T>()
     {
-        services.AddSingleton<IProducer<Null, T>>(sp =>
+        Services.AddSingleton<IProducer<Null, T>>(sp =>
         {
             var baseProducer = sp.GetRequiredService<IProducer<byte[], byte[]>>();
 
@@ -48,17 +50,43 @@ public class KafkaConfigurator
                 .Build();
         });
 
-        var eventMapping = settings.Events.FirstOrDefault(map => map.Name == typeof(T).Name);
-        if (eventMapping is null)
+        var eventSettings = Settings.Events.FirstOrDefault(map => map.Name == typeof(T).Name);
+        if (eventSettings is null)
         {
             throw new ArgumentException($"Для события {typeof(T)} не задан маппинг на топик");
         }
 
-        services.AddTransient<IEventProducer<T>>(sp =>
+        Services.AddTransient<IConsumer<Null, T>>(sp =>
+        {
+            if (string.IsNullOrWhiteSpace(eventSettings.GroupId))
+            {
+                throw new ArgumentException($"Для события {typeof(T)} не задан {nameof(eventSettings.GroupId)}");
+            }
+
+            var config = new ConsumerConfig
+            {
+                BootstrapServers = Settings.BootstrapServers,
+                GroupId = eventSettings.GroupId,
+                AutoOffsetReset = AutoOffsetReset.Latest,
+                EnableAutoCommit = false,
+            };
+
+            var consumer = new ConsumerBuilder<Null, T>(config)
+                .SetValueDeserializer(new JsonEventDeserializer<T>())
+                .Build();
+
+            consumer.Subscribe(eventSettings.TopicName);
+
+            return consumer;
+        });
+
+        Services.AddTransient<IEventProducer<T>>(sp =>
         {
             return ActivatorUtilities.CreateInstance<EventProducer<T>>(
-                sp, new EventProducer<T>.Topic(eventMapping.TopicName));
+                sp, new Topic(eventSettings.TopicName));
         });
+
+        Services.AddTransient<IEventConsumer<T>, EventConsumer<T>>();
 
         return this;
     }

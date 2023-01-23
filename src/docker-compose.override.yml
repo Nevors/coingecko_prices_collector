@@ -3,13 +3,15 @@ version: '3.4'
 services:
   coingecko-collector-worker:
     environment:
-      - CoingeckoCollectorSettings__KafkaSettings__BootstrapServers=kafka:9092
+      - KafkaSettings__BootstrapServers=kafka:9092
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
 
   coingecko-prices-webapi:
+    environment:
+      - KafkaSettings__BootstrapServers=kafka:9092  
     ports:
-      - "5152:80"
+      - "5041:80"
 
   zookeeper:
     environment:

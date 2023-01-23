@@ -23,6 +23,6 @@
     <ProjectReference Include="..\..\..\Common\Api\Coingecko.Api\Coingecko.Api.csproj" />
     <ProjectReference Include="..\..\..\Common\Common\Common.csproj" />
     <ProjectReference Include="..\..\..\Common\MessageBroker\Kafka\Kafka.csproj" />
-    <ProjectReference Include="..\..\..\Common\MessageBroker\Сoingecko.Events.Contracts\Сoingecko.Events.Contracts.csproj" />
+    <ProjectReference Include="..\..\..\Common\MessageBroker\Coingecko.Events.Contracts\Coingecko.Events.Contracts.csproj" />
   </ItemGroup>
 </Project>

@@ -25,7 +25,9 @@ internal class CurrencyCoinsPageQuery : ICurrencyCoinsPageQuery
                     .AddQueryParameter("page", request.PageNumber), token),
             token);
 
-        return response!.Select(_ => new CoinDto { Symbol = _.Symbol, CurrentPrice = _.CurrentPrice });
+        return response!
+            .Where(_ => _.CurrentPrice != null)
+            .Select(_ => new CoinDto { Symbol = _.Symbol, CurrentPrice = _.CurrentPrice!.Value });
     }
 
     record ResponseItem
@@ -33,7 +35,7 @@ internal class CurrencyCoinsPageQuery : ICurrencyCoinsPageQuery
         public string Symbol { get; init; } = string.Empty;
 
         [JsonPropertyName("current_price")]
-        public double CurrentPrice { get; init; }
+        public double? CurrentPrice { get; init; }
     }
 }
 

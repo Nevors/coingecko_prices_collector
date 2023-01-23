@@ -8,7 +8,11 @@ WORKDIR /src
 COPY ["Services/Collector/CoingeckoCollector/CoingeckoCollector.csproj", "Services/Collector/CoingeckoCollector/"]
 COPY ["Common/Api/Coingecko.Api/Coingecko.Api.csproj", "Common/Api/Coingecko.Api/"]
 COPY ["Common/Common/Common.csproj", "Common/Common/"]
+COPY ["Common/Configuration/Configuration.csproj", "Common/Configuration/"]
 COPY ["Common/Api/Coingecko.Api.Contracts/Coingecko.Api.Contracts.csproj", "Common/Api/Coingecko.Api.Contracts/"]
+COPY ["Common/MessageBroker/Kafka/Kafka.csproj", "Common/MessageBroker/Kafka/"]
+COPY ["Common/MessageBroker/MessageBroker.Contracts/MessageBroker.Contracts.csproj", "Common/MessageBroker/MessageBroker.Contracts/"]
+COPY ["Common/MessageBroker/Coingecko.Events.Contracts/Coingecko.Events.Contracts.csproj", "Common/MessageBroker/Coingecko.Events.Contracts/"]
 RUN dotnet restore "Services/Collector/CoingeckoCollector/CoingeckoCollector.csproj"
 COPY . .
 WORKDIR "/src/Services/Collector/CoingeckoCollector"

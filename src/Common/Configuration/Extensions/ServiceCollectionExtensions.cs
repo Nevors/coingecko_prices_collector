@@ -26,7 +26,7 @@ public static class ServiceCollectionExtensions
 
         if (settingInstance is null)
         {
-            throw new InvalidOperationException("Конфигурируемые настройки не найдены");
+            throw new InvalidOperationException($"Конфигурируемые настройки не найдены для {typeof(TSetting)}");
         }
 
         new TValidator().ValidateAndThrow(settingInstance);

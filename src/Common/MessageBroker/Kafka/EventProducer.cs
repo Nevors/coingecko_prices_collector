@@ -1,5 +1,4 @@
 ﻿using Confluent.Kafka;
-using Kafka.Abstractions;
 using MessageBroker.Contracts.Abstractions;
 
 namespace Kafka;
@@ -24,6 +23,4 @@ internal class EventProducer<T> : IEventProducer<T>
 
         await producer.ProduceAsync(topic.Name, kafkaMessage, cancellationToken);
     }
-
-    public record Topic(string Name);
 }

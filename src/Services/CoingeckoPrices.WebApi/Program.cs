@@ -1,41 +1,41 @@
+using Coingecko.Events.Contracts;
+using CoingeckoPrices.WebApi.EventHandler;
+using CoingeckoPrices.WebApi.Storage;
+using CoingeckoPrices.WebApi.Storage.Contracts;
+using Kafka.Extensions;
+using Kafka.Subscriber.Extensions;
+using MessageBroker.Contracts.Abstractions;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services
+    .AddKafka(builder.Configuration)
+    .AddEvent<CurrencyCoinsUpdatedEvent>()
+    .AddEventSubscriber<CurrencyCoinsUpdatedEvent, CoinsUpdatedEventHandler>();
+
+builder.Services
+    .AddTransient<IConversionQuery, ConversionQuery>()
+    .AddSingleton<ICoinsStorage, CoinsStorage>()
+    .Decorate<IEventHandler<CurrencyCoinsUpdatedEvent>, CoinsUpdatedEventHandlerLoggerDecorator>();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
-var summaries = new[]
+app.MapGet("/currencies/{currency}", (ICoinsStorage storage, string currency, CancellationToken token) =>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", (CancellationToken token) =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateTime.Now.AddDays(index),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
+    return storage.GetCoins(currency, token);
 })
-.WithName("GetWeatherForecast");
+.WithName("GetCurrenciesCoins");
+
+app.MapGet("/coins/{base}_{quote}", (IConversionQuery query, string @base, string quote, CancellationToken token) =>
+{
+    return query.ComputeConversion(@base, quote, token);
+})
+.WithName("GetConversionOfPair");
 
 app.Run();
-
-internal record WeatherForecast(DateTime Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

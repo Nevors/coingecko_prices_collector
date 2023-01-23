@@ -7,12 +7,18 @@ services:
     build:
       context: .
       dockerfile: Services/Collector/CoingeckoCollector/Dockerfile
+    depends_on:
+      kafka-create-topics-tool:
+        condition: service_completed_successfully
 
   coingecko-prices-webapi:
     image: ${DOCKER_REGISTRY-}coingecko-prices-webapi
     build:
       context: .
       dockerfile: Services/CoingeckoPrices.WebApi/Dockerfile
+    depends_on:
+      kafka-create-topics-tool:
+        condition: service_completed_successfully
 
   zookeeper:
     container_name: coingecko-zookeeper

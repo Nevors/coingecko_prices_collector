@@ -1,4 +1,4 @@
-﻿namespace СoingeckoKafka.Contracts;
+﻿namespace Coingecko.Events.Contracts;
 
 public record CurrencyCoinsUpdatedEvent
 {

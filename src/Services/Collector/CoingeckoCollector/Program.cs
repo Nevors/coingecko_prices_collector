@@ -1,5 +1,6 @@
 using Coingecko.Api.Abstractions.Queries;
 using Coingecko.Api.Extensions;
+using Coingecko.Events.Contracts;
 using CoingeckoCollector.Abstractions;
 using CoingeckoCollector.NonPro;
 using CoingeckoCollector.Settings;
@@ -7,7 +8,6 @@ using CoingeckoCollector.Worker;
 using Configuration.Extensions;
 using Kafka.Extensions;
 using System.Reflection;
-using ÑoingeckoKafka.Contracts;
 
 IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, services) =>

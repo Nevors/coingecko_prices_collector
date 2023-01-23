@@ -1,6 +1,4 @@
-﻿using MessageBroker.Contracts.Abstractions;
-
-namespace Kafka.Abstractions
+﻿namespace MessageBroker.Contracts.Abstractions
 {
     public interface IEventProducer<T>
     {
