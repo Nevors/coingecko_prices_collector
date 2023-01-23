@@ -26,7 +26,7 @@ internal class CoingeckoCoinsApi : ICoingeckoCoinsApi
         return Enumerable
             .Range(1, countOfPages)
             .Select(pageNumber => currencyCoins.GetCoinsPageAsync(
-                        new(currency, PageNumber: pageNumber + 1, PageSize: pageSize), token))
+                        new(currency, PageNumber: pageNumber, PageSize: pageSize), token))
             .ToArray();
     }
 }
